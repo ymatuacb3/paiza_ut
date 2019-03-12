@@ -21,7 +21,7 @@ module Paiza
         get_ut_cases
       end
       if @ut_cases.empty?
-        @ut_cases << ['', 'expect', ['input']]
+        @ut_cases << ['', ['expect1'], ['input1']]
       end
       self
     end
@@ -48,7 +48,7 @@ module Paiza
 
     def get_input_specs
       if match_reg?(/^入力される値$/)
-        if m = match_reg?(/^標準入力からの値取得方法はこちらをご確認ください$/)
+        if m = match_reg?(/標準入力からの値取得方法はこちらをご確認ください$/)
           @input_specs = split_lines(m.pre_match)
         end
       end
@@ -57,16 +57,21 @@ module Paiza
 
     def get_ut_cases
       reg_input = /^入力例(\d*)\n/
-      reg_expect = /^出力例(\d*)\n(.+)\n/
+      reg_expect = /^出力例(\d*)\n/
+      reg_end = /^(解答欄|値取得)/
 
-      while m1 = match_reg?(reg_input, false)
+      m1 = match_reg?(reg_input)
+      while m1 do
         idx1 = m1[1]
         if m2 = match_reg?(reg_expect)
           idx2 = m2[1]
-          expect = m2[2]
           input = m2.pre_match
+
+          m1 = match_reg?(reg_input, false)
+          m3 = m1 || match_reg?(reg_end)
+          next unless m3
           if idx1 == idx2
-            @ut_cases << [idx1, expect, split_lines(input)]
+            @ut_cases << [idx1, split_lines(m3.pre_match), split_lines(input)]
           else
             errlog "ut case index not match (#{idx1}/#{idx2}) #{input}"
           end
