@@ -1,0 +1,31 @@
+
+paizaスキルチェック用ヘルパー
+
+https://paiza.jp
+速やかにスキルチェックの問題を解くために、単体テストの生成を自動化する。
+
+使用法：
+
+1. 環境設定
+  source env.sh
+2. work dir作成
+  mkdir task/xx/yyy
+3. create skelton
+  cd task/xx/yyy
+  start  (aliased to tool/start_paiza.rb)
+4. チャレンジ開始
+  https://paiza.jp/challenges
+  問題を選んで「チャレンジする」ボタン
+5. 問題文コピー
+  ブラウザに表示された問題文を全選択して、./task.txt に保存する
+6. 単体テスト生成
+  sta  (aliased to tool/start_paiza.rb)
+7. 回答作成
+  ./answer.rb に回答を記述する
+8. 単体テスト実行
+  ut (aliased to ./unittest.rb)
+9. 回答
+  ./answer.rb の内容を解答欄にコピーする
+10. ツール修正(チャレンジ完了後)
+  ./errlog.txt があれば、ツールの想定に問題があるので調査、修正する
+
