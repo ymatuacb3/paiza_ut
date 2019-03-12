@@ -13,8 +13,8 @@ class TestPaiza < Test::Unit::TestCase
 
 % task.ut_cases.each do |idx, exp, inp|
   def test_answer<%= idx %>
-    expected = "<%= exp.join '\\n' %>"
-    input = "<%= inp.join '\\n' %>"
+    expected = <%= exp %>
+    input = <%= inp %>
     actual = get_actual_answer(input)
     assert_equal(expected, actual)
   end
